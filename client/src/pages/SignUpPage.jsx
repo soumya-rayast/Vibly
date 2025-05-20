@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { ShipWheelIcon } from 'lucide-react'
-import { Link } from 'react-router'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { signup } from '../lib/api'
+import { Link } from 'react-router-dom'
 import useSignUp from '../hooks/UseSignup'
 
 const SignUpPage = () => {
@@ -34,7 +32,7 @@ const SignUpPage = () => {
             error && (
               <div className='alert alert-error mb-4'>
                 <span>
-                  {error.data.message}
+                  {error?.data?.message || error.message || 'An error occurred'}
                 </span>
               </div>
             )
@@ -60,7 +58,7 @@ const SignUpPage = () => {
                       placeholder='Sam'
                       className='input input-bordered w-full'
                       value={signUpdata.fullName}
-                      onChange={(e) => setSignUpData({ ...setSignUpData, fullName: e.target.value })}
+                      onChange={(e) => setSignUpData({ ...signUpdata, fullName: e.target.value })}
                       required
                     />
                   </div>
@@ -75,7 +73,7 @@ const SignUpPage = () => {
                       placeholder='sam@gmail.com'
                       className='input input-bordered w-full'
                       value={signUpdata.email}
-                      onChange={(e) => setSignUpData({ ...setSignUpData, email: e.target.value })}
+                      onChange={(e) => setSignUpData({ ...signUpdata, email: e.target.value })}
                       required
                     />
                   </div>
@@ -90,7 +88,7 @@ const SignUpPage = () => {
                       placeholder='password'
                       className='input input-bordered w-full'
                       value={signUpdata.password}
-                      onChange={(e) => setSignUpData({ ...setSignUpData, password: e.target.value })}
+                      onChange={(e) => setSignUpData({ ...signUpdata, password: e.target.value })}
                       required
                     />
                     <p className='text-xs opacity-70 mt-1'>

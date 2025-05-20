@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import useLogin from '../hooks/useLogin';
-
+import { ShipWheelIcon } from 'lucide-react'
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({
     email: "",
@@ -27,13 +27,11 @@ const LoginPage = () => {
             </span>
           </div>
           {/* Error message Display */}
-          {
-            error && (
-              <div className='alert alert-error mb-4'>
-                <span>{error.response.data.message}</span>
-              </div>
-            )
-          }
+          {error && (
+            <div className='alert alert-error mb-4'>
+              <span>{error?.response?.data?.message || error.message || "Login failed"}</span>
+            </div>
+          )}
           <div className='w-full'>
             <form onSubmit={handleLogin}>
               <div className='space-y-4'>
@@ -66,13 +64,13 @@ const LoginPage = () => {
                       type="password"
                       placeholder='Password'
                       className='input input-bordered w-full'
-                      value={loginData.email}
+                      value={loginData.password}
                       onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                       required
                     />
                   </div>
                 </div>
-                <button className='submit' type='submit' disabled={isPending}>
+                <button className='btn btn-primary w-full' type='submit' disabled={isPending}>
                   {
                     isPending ? (
                       <>

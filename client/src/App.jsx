@@ -22,32 +22,32 @@ const App = () => {
 
   if (isLoading) return <PageLoader />
   return (
-    <div className='h-screen' data-theme={theme}>
+    <div className="h-screen" data-theme={theme}>
       <Routes>
-        <Route path='/'
+        <Route
+          path="/"
           element={
             isAuthenticated && isOnboarded ? (
               <Layout showSidebar={true}>
                 <HomePage />
               </Layout>
             ) : (
-              <Navigate t
-                o={!isAuthenticated ? '/login' : '/onboarding'} />)} />
-        <Route path='/'
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
+          path="/signup"
           element={
-            !isAuthenticated ?
-              <HomePage /> :
-              <Navigate to={'/login'} />} />
-        <Route path='/signup'
+            !isAuthenticated ? <SignUpPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+          }
+        />
+        <Route
+          path="/login"
           element={
-            !isAuthenticated ?
-              <SignUpPage /> :
-              <Navigate to={'/'} />} />
-        <Route path='/login'
-          element={
-            isAuthenticated ?
-              <LoginPage /> :
-              <Navigate to={isOnboarded ? '/' : '/onboarding'} />} />
+            !isAuthenticated ? <LoginPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+          }
+        />
         <Route
           path="/notifications"
           element={
@@ -60,28 +60,46 @@ const App = () => {
             )
           }
         />
-        <Route path='/call'
+        <Route
+          path="/call/:id"
           element={
-            isAuthenticated ?
-              <CallPage /> :
-              <Navigate to={'/login'} />} />
-        <Route path='/chat/:id'
+            isAuthenticated && isOnboarded ? (
+              <CallPage />
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+
+        <Route
+          path="/chat/:id"
           element={
-            isAuthenticated && isOnboarded ?
+            isAuthenticated && isOnboarded ? (
               <Layout showSidebar={false}>
                 <ChatPage />
-              </Layout> :
-              <Navigate to={isAuthenticated ? '/login' : '/onboarding'} />} />
-        <Route path='/onboarding'
+              </Layout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+
+        <Route
+          path="/onboarding"
           element={
             isAuthenticated ? (
               !isOnboarded ? (
                 <OnboardingPage />
-              ) : (<Navigate to={'/'} />)
+              ) : (
+                <Navigate to="/" />
+              )
             ) : (
-              <Navigate to={'/login'} />
-            )} />
+              <Navigate to="/login" />
+            )
+          }
+        />
       </Routes>
+
       <Toaster />
     </div>
   )

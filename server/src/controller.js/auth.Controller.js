@@ -3,9 +3,18 @@ const User = require('../models/User.js')
 const jwt = require('jsonwebtoken');
 
 const signup = async (req, res) => {
+    console.log('Signup request body:', req.body);
     const { email, password, fullName } = req.body;
 
     try {
+         // Validate JWT secret exists
+        if (!process.env.JWT_SECRET_KEY) {
+            console.error('JWT_SECRET_KEY is missing in environment variables');
+            return res.status(500).json({ 
+                success: false,
+                message: 'Server configuration error' 
+            });
+        }
         if (!email || !password || !fullName) {
             return res.status(400).json({ message: "All fields are required" });
         }
@@ -47,7 +56,7 @@ const signup = async (req, res) => {
             expiresIn: '7d'
         });
         res.cookie('jwt', token, {
-            maxAge: 7 * 24 * 60 * 60 * 100,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true,
             sameSite: 'strict',
             secure: process.env.NODE_ENV === 'production'
@@ -71,11 +80,11 @@ const login = async (req, res) => {
         const isPasswordCorrect = await user.matchPassword(password);
         if (!isPasswordCorrect) return res.status(401).json({ message: 'Invalid email or password' });
 
-        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET_KEY, {
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
             expiresIn: '7d'
         });
         res.cookie('jwt', token, {
-            maxAge: 7 * 24 * 60 * 60 * 100,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true,
             sameSite: 'strict',
             secure: process.env.NODE_ENV === 'production'
@@ -90,9 +99,9 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     res.clearCookie('jwt');
     res.status(200).json({ success: true, message: 'Logout Successful' })
-}
+} 
 
-const onboard = async (req, res) => {
+const onboard = async (req, res) => { 
     try {
         const userId = req.user._id;
         const { fullName, bio, nativeLanguage, learningLanguage, location } = req.body;
@@ -108,7 +117,7 @@ const onboard = async (req, res) => {
                     !location && 'location',
                 ].filter(Boolean),
             })
-        }
+        } 
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             {

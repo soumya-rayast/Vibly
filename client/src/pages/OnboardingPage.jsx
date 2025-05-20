@@ -30,7 +30,7 @@ const OnboardingPage = () => {
       toast.error(error.response.data.message);
     },
   })
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -84,7 +84,7 @@ const OnboardingPage = () => {
                 type="text"
                 value={formState.fullName}
                 onChange={(e) => setFormState({ ...formState, fullName: e.target.value })}
-                className='input input-boarded w-full'
+                className='input input-bordered w-full'
                 placeholder='Your full name'
               />
             </div>
@@ -114,24 +114,21 @@ const OnboardingPage = () => {
                   onChange={(e) => setFormState({ ...formState, nativeLanguage: e.target.value })}
                   className='select select-bordered w-full'
                 >
-                  <option value="">
-                    Select your native language
-                    {
-                      LANGUAGES.map((lang) => (
-                        <option
-                          key={`native-${lang}`}
-                          value={lang.toLowerCase()}
-                        >
-                          {lang}
-                        </option>
-                      ))
-                    }
-                  </option>
+                  <option value="">Select your native language</option>
+                  {LANGUAGES.map((lang) => (
+                    <option
+                      key={`native-${lang}`}
+                      value={lang.toLowerCase()}
+                    >
+                      {lang}
+                    </option>
+                  ))}
                 </select>
               </div>
+
               {/* Learning Language */}
               <div className='form-control'>
-                <label color='label'>
+                <label className='label'> {/* Fixed typo: color -> className */}
                   <span className='label-text'>Learning Language</span>
                 </label>
                 <select
@@ -141,15 +138,14 @@ const OnboardingPage = () => {
                   className='select select-bordered w-full'
                 >
                   <option value="">Select language you're learning</option>
-                  {
-                    LANGUAGES.map((lang) => {
-                      <option key={`learning-${lang}`} value={lang.toLowerCase()}>
-                        {lang}
-                      </option>
-                    })
-                  }
+                  {LANGUAGES.map((lang) => (
+                    <option key={`learning-${lang}`} value={lang.toLowerCase()}>
+                      {lang}
+                    </option>
+                  ))}
                 </select>
               </div>
+
             </div>
             {/* Location */}
             <div className='form-control'>
@@ -172,13 +168,13 @@ const OnboardingPage = () => {
             <button className='btn btn-primary w-full' disabled={isPending} type='submit'>
               {isPending ? (
                 <>
-                  <ShipWheelIcon className='size-5 mr-2' />
-                  Complete Onboarding
+                  <Loader2Icon className='animate-spin size-5 mr-2' />
+                  Onboarding...
                 </>
               ) : (
                 <>
-                  <Loader2Icon className='animate-spin size-5 mr-2' />
-                  Onboarding...
+                  <ShipWheelIcon className='size-5 mr-2' />
+                  Complete Onboarding
                 </>
               )}
             </button>

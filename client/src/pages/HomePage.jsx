@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query'
-import { getOutGoingFriendReqs, getRecommendedUsers, getUserFriends } from '../lib/api';
-import { Link } from 'react-router';
-import { User2Icon } from 'lucide-react';
+import { getOutGoingFriendReqs, getRecommendedUsers, getUserFriends, sendFriendReqs } from '../lib/api';
+import { Link } from 'react-router-dom';
+import { User2Icon, UsersIcon } from 'lucide-react';
 import FriendCard, { getLanguageFlag } from '../Components/FriendCard';
 import NoFriendsFound from '../Components/NoFriendsFound';
 import { capitialize } from '../lib/utils';
+import { MapPinIcon, CheckCircleIcon, UserPlusIcon } from 'lucide-react';
 
 const HomePage = () => {
   const queryClient = useQueryClient();
@@ -24,7 +25,7 @@ const HomePage = () => {
     queryFn: getOutGoingFriendReqs,
   })
   const { mutate: sendRequestMutation, isPending } = useMutation({
-    mutationFn: sendFriendRequest,
+    mutationFn: sendFriendReqs,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['outgoingFriendReqs'] }),
   })
   useEffect(() => {
@@ -38,30 +39,30 @@ const HomePage = () => {
   }, [outgoingFriendReqs]);
 
   return (
-    <div className='p-4 sm:p-6 lg:p-8'>
-      <div className='container mx-auto space-y-10'>
-        <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4'>
-          <h2 className='text-2xl sm:text-3xl font-bold tracking-tight'>
-            Your friends
-          </h2>
-          <Link to='/notifications' className='btn btn-outline btn-sm'>
-            <User2Icon className='mr-2 size-4' />
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="container mx-auto space-y-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Your Friends</h2>
+          <Link to="/notifications" className="btn btn-outline btn-sm">
+            <UsersIcon className="mr-2 size-4" />
             Friend Requests
           </Link>
-          {loadingFriends ? (
-            <div className="flex justify-center py-12">
-              <span className="loading loading-spinner loading-lg" />
-            </div>
-          ) : friends.length === 0 ? (
-            <NoFriendsFound />
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {friends.map((friend) => (
-                <FriendCard key={friend._id} friend={friend} />
-              ))}
-            </div>
-          )}
-          
+        </div>
+
+        {loadingFriends ? (
+          <div className="flex justify-center py-12">
+            <span className="loading loading-spinner loading-lg" />
+          </div>
+        ) : friends.length === 0 ? (
+          <NoFriendsFound />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {friends.map((friend) => (
+              <FriendCard key={friend._id} friend={friend} />
+            ))}
+          </div>
+        )}
+
         <section>
           <div className="mb-6 sm:mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -128,9 +129,8 @@ const HomePage = () => {
 
                       {/* Action button */}
                       <button
-                        className={`btn w-full mt-2 ${
-                          hasRequestBeenSent ? "btn-disabled" : "btn-primary"
-                        } `}
+                        className={`btn w-full mt-2 ${hasRequestBeenSent ? "btn-disabled" : "btn-primary"
+                          } `}
                         onClick={() => sendRequestMutation(user._id)}
                         disabled={hasRequestBeenSent || isPending}
                       >
@@ -153,7 +153,6 @@ const HomePage = () => {
             </div>
           )}
         </section>
-        </div>
       </div>
     </div>
   )

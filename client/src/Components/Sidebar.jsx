@@ -1,12 +1,12 @@
 import React from 'react'
 import useAuthUser from '../hooks/useAuthUser'
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation } from 'react-router-dom';
 import { BellIcon, HomeIcon, ShipWheelIcon, User2Icon } from 'lucide-react';
 
 const Sidebar = () => {
     const { authUser } = useAuthUser();
     const location = useLocation();
-    const currentPath = location.pathname();
+    const currentPath = location.pathname;
 
     return (
         <aside className='w-64 bg-base-200 border-r border-base-300 hidden lg;flex flex-col h-screen sticky top-0'>
