@@ -1,7 +1,7 @@
-const {StreamChat} = require('stream-chat');
+const { StreamChat } = require('stream-chat');
 const dotenv = require('dotenv')
 dotenv.config();
-
+ 
 const apiKey = process.env.STREAM_API_KEY;
 const apiSecret = process.env.STREAM_API_SECRET;
 
@@ -25,11 +25,11 @@ const generateStreamToken = async (userId) => {
         const userIdStr = userId.toString();
         return streamClient.createToken(userIdStr)
     } catch (error) {
-        console.log("Error generating Stream token:",error);
+        console.log("Error generating Stream token:", error);
     }
 }
 
 module.exports = {
-    upsertStreamUser,
+    upsertStreamUser,    
     generateStreamToken
 }

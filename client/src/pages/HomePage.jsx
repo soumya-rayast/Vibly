@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query'
 import { getOutGoingFriendReqs, getRecommendedUsers, getUserFriends, sendFriendReqs } from '../lib/api';
 import { Link } from 'react-router-dom';
-import { User2Icon, UsersIcon } from 'lucide-react';
+import {  UsersIcon } from 'lucide-react';
 import FriendCard, { getLanguageFlag } from '../Components/FriendCard';
 import NoFriendsFound from '../Components/NoFriendsFound';
 import { capitialize } from '../lib/utils';
@@ -21,7 +21,7 @@ const HomePage = () => {
     queryFn: getRecommendedUsers,
   })
   const { data: outgoingFriendReqs } = useQuery({
-    queryKey: ['outgoingFriends'],
+    queryKey: ['outgoingFriendReqs'],
     queryFn: getOutGoingFriendReqs,
   })
   const { mutate: sendRequestMutation, isPending } = useMutation({
@@ -89,7 +89,7 @@ const HomePage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recommendedUsers.map((user) => {
-                const hasRequestBeenSent = outgoingRequestsIds.has(user._id);
+                const hasRequestBeenSent = outGoingRequestsIds.has(user._id);
 
                 return (
                   <div

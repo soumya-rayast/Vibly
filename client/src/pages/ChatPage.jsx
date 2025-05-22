@@ -36,7 +36,7 @@ const ChatPage = () => {
     const initChat = async () => {
       if (!tokenData?.token || !authUser) return;
       try {
-        console.log('Initializing Stream chat client...');
+        console.log('Initializing stream chat client...');
         const client = StreamChat.getInstance(STREAM_API_KEY);
 
         await client.connectUser({
@@ -53,7 +53,7 @@ const ChatPage = () => {
         });
 
         await currChannel.watch();
-        setChannel(client);
+        setChatClient(client);
         setChannel(currChannel);
 
       } catch (error) {
@@ -89,7 +89,7 @@ const ChatPage = () => {
             <Window>
               <ChannelHeader />
               <MessageList />
-              <MessageInput />
+              <MessageInput focus />
             </Window>
           </div>
           <Thread />

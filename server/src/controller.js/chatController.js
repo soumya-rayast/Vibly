@@ -2,7 +2,7 @@ const { generateStreamToken } = require("../config/stream.js");
 
 const getStreamToken = async (req, res) => {
     try {
-        const token = generateStreamToken(req.user.id);
+        const token = await generateStreamToken(req.user.id);
         req.status(200).json({ token });
     } catch (error) {
         console.log('Error in getStreamToken controller', error.message);
@@ -12,4 +12,4 @@ const getStreamToken = async (req, res) => {
 
 module.exports = {
     getStreamToken
-}
+} 

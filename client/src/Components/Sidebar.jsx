@@ -9,11 +9,11 @@ const Sidebar = () => {
     const currentPath = location.pathname;
 
     return (
-        <aside className='w-64 bg-base-200 border-r border-base-300 hidden lg;flex flex-col h-screen sticky top-0'>
+        <aside className='w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col h-screen sticky top-0'>
             <div className='p-5 border-b border-base-300'>
                 <Link to={'/'} className='flex items-center gap-2.5'>
                     <ShipWheelIcon className='size-9 text-primary' />
-                    <span className='text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-t from-primary to-secondary tracking-wider'>
+                    <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
                         Vibly
                     </span>
                 </Link>
@@ -34,7 +34,7 @@ const Sidebar = () => {
                     <span>Friends</span>
                 </Link>
                 <Link
-                    to={'/'}
+                    to={'/notifications'}
                     className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${currentPath === '/notifications' ? 'btn-active' : ''}`}
                 >
                     <BellIcon className='size-5 text-base-content opacity-70' />
@@ -51,10 +51,9 @@ const Sidebar = () => {
                     </div>
                     <div className='flex-1'>
                         <p className='font-semibold text-sm'>{authUser?.fullName}</p>
-                        <p className='text-xs text-success flex items-center gap-1'>
-                            <span className='size-2 rounded-full bg-success inline-block'>
-                                Online
-                            </span>
+                        <p className="text-xs text-success flex items-center gap-1">
+                            <span className="size-2 rounded-full bg-success inline-block" />
+                            Online
                         </p>
                     </div>
                 </div>

@@ -1,4 +1,3 @@
-import React from 'react'
 import Sidebar from './Sidebar'
 import Navbar from './Navbar'
 
@@ -17,5 +16,4 @@ const Layout = ({ children, showSidebar = false }) => {
         </div>
     )
 }
-
 export default Layout

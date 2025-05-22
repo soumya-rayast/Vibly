@@ -9,7 +9,7 @@ const getRecommendedUsers = async (req, res) => {
         const recommendedUsers = await User.find({
             $and: [
                 { _id: { $ne: currentUserId } }, //exclude current user
-                { $id: { $nin: currentUser.friends } }, // exclude current users friends
+                { _id: { $nin: currentUser.friends } }, // exclude current users friends
                 { isOnboarded: true }
             ]
         })
@@ -94,23 +94,29 @@ const acceptFriendRequest = async (req, res) => {
         consol.log("Error in acceptFriendRequest", error.message);
     }
 }
-const getFriendRequests = async (req, res) => {
+const getFriendRequests = async (req, res) => { // <-- Fix parameter name
     try {
         const incomingReqs = await FriendRequest.find({
             recipient: req.user.id,
             status: 'pending',
-        }).populate('Sender', 'fullName profilePic nativeLanguage, learningLanguage');
-        const acceptedReqs = await FriendRequest.find({
-            sender: req.user.id,
-            status: 'accepted',
-        }).populate('recipient', 'fullName profilePic');
+        }).populate('sender', 'fullName profilePic natFiveLanguage learningLanguage'); // Fixed populate fields
 
-        re.status(200).json({ incomingReqs, acceptedReqs });
+        const acceptedReqs = await FriendRequest.find({
+            recipient: req.user.id, // Typically you want requests accepted BY the user
+            status: 'accepted',
+        }).populate('sender', 'fullName profilePic'); // Changed to populate sender
+
+        res.status(200).json({ // Fixed typo: re -> res
+            incomingReqs,
+            acceptedReqs
+        });
+
     } catch (error) {
         console.log('Error in getPendingFriendRequests controller', error.message);
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 }
+
 const getOutgoingFriendRequests = async (req, res) => {
     try {
         const outGoingRequests = await FriendRequest.find({

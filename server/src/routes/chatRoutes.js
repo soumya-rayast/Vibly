@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.get('/token', protectRoute, getStreamToken);
 
-module.exports = router;
+module.exports = router;  

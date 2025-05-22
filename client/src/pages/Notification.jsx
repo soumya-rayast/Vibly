@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import React from 'react'
 import { acceptFriendRequest, getFriendRequests } from '../lib/api';
 import NoNotificationFound from '../Components/NoNotificationFound';
+import { UserCheckIcon, BellIcon, ClockIcon, MessageSquareIcon } from 'lucide-react';
 
 const Notification = () => {
   const queryClient = useQueryClient();
@@ -18,8 +18,8 @@ const Notification = () => {
     }
   })
 
-  const incomingRequests = friendRequests?.incomingReq || []
-  const acceptedRequests = friendRequests?.acceptedReq || []
+  const incomingRequests = friendRequests?.incomingReqs || []
+  const acceptedRequests = friendRequests?.acceptedReqs || []
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
@@ -95,14 +95,14 @@ const Notification = () => {
                         <div className="flex items-start gap-3">
                           <div className="avatar mt-1 size-10 rounded-full">
                             <img
-                              src={notification.recipient.profilePic}
-                              alt={notification.recipient.fullName}
+                              src={notification.sender.profilePic}
+                              alt={notification.sender.fullName}
                             />
                           </div>
                           <div className="flex-1">
-                            <h3 className="font-semibold">{notification.recipient.fullName}</h3>
+                            <h3 className="font-semibold">{notification.sender.fullName}</h3>
                             <p className="text-sm my-1">
-                              {notification.recipient.fullName} accepted your friend request
+                              {notification.sender.fullName} accepted your friend request
                             </p>
                             <p className="text-xs flex items-center opacity-70">
                               <ClockIcon className="h-3 w-3 mr-1" />
@@ -120,6 +120,7 @@ const Notification = () => {
                 </div>
               </section>
             )}
+
 
             {incomingRequests.length === 0 && acceptedRequests.length === 0 && (
               <NoNotificationFound />
