@@ -25,12 +25,12 @@ app.use(cors({
 }));
 // Body Parsing
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser()); 
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/chat', chatRoutes);
-
+ 
 // Health Check
 app.get('/api/health', (req, res) => {
     res.status(200).json({

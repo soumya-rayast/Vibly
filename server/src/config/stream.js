@@ -32,4 +32,4 @@ const generateStreamToken = async (userId) => {
 module.exports = {
     upsertStreamUser,    
     generateStreamToken
-}
+} 

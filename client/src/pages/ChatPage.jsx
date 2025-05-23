@@ -35,6 +35,11 @@ const ChatPage = () => {
   useEffect(() => {
     const initChat = async () => {
       if (!tokenData?.token || !authUser) return;
+      if (authUser._id === targetUserId) {
+        toast.error("Cannot create a chat with yourself");
+        setLoading(false);
+        return;
+      }
       try {
         console.log('Initializing stream chat client...');
         const client = StreamChat.getInstance(STREAM_API_KEY);
@@ -45,11 +50,17 @@ const ChatPage = () => {
           image: authUser.profilePic,
         }, tokenData.token);
 
+        const members = new Set([authUser._id, targetUserId]);
+        if (members.size !== 2) {
+          throw new Error("Invalid chat participants");
+        }
+
         // Create a Channel
         const channelId = [authUser._id, targetUserId].sort().join('-');
 
         const currChannel = client.channel('messaging', channelId, {
           members: [authUser._id, targetUserId],
+          created_by_id: authUser._id
         });
 
         await currChannel.watch();
@@ -78,7 +89,7 @@ const ChatPage = () => {
       toast.success("Video call link sent successfully!");
     }
   };
-  
+
   if (loading || !chatClient || !channel) return <ChatLoader />
   return (
     <div className='h-[93vh]'>

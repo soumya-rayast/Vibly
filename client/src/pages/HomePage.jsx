@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query'
-import { getOutGoingFriendReqs, getRecommendedUsers, getUserFriends, sendFriendReqs } from '../lib/api';
+import { acceptFriendRequest, getOutGoingFriendReqs, getRecommendedUsers, getUserFriends, sendFriendReqs } from '../lib/api';
 import { Link } from 'react-router-dom';
-import {  UsersIcon } from 'lucide-react';
+import { UsersIcon } from 'lucide-react';
 import FriendCard, { getLanguageFlag } from '../Components/FriendCard';
 import NoFriendsFound from '../Components/NoFriendsFound';
 import { capitialize } from '../lib/utils';
@@ -28,6 +28,15 @@ const HomePage = () => {
     mutationFn: sendFriendReqs,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['outgoingFriendReqs'] }),
   })
+  const { mutate: acceptRequest } = useMutation({
+    mutationFn: acceptFriendRequest,
+    onSuccess: () => {
+      queryClient.refetchQueriess({ queryKey: ['friends'] });
+      queryClient.invalidateQueries({ queryKey: ['friendRequests'] });
+    }
+  });
+
+
   useEffect(() => {
     const outgoingIds = new Set()
     if (outgoingFriendReqs && outgoingFriendReqs.length > 0) {

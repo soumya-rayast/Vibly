@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import useLogin from '../hooks/useLogin';
-import { Eye, EyeClosed, EyeOff, ShipWheelIcon } from 'lucide-react'
+import { Eye, EyeClosed, EyeOff, ShipWheelIcon, VoicemailIcon } from 'lucide-react'
 import { useThemeStore } from '../store/useThemeStore';
 const LoginPage = () => {
    const { theme } = useThemeStore();
@@ -36,7 +36,7 @@ const LoginPage = () => {
         <div className="md:w-1/2 w-full p-8 flex flex-col justify-center">
           {/* Logo */}
           <div className="flex items-center gap-3 mb-8 justify-center">
-            <ShipWheelIcon className="size-10 text-primary drop-shadow" />
+            <VoicemailIcon className="size-10 text-primary drop-shadow" />
             <span className="text-4xl font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-widest">
               Vibly
             </span>

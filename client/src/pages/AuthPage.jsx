@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, ShipWheelIcon } from 'lucide-react';
+import { Eye, EyeOff, LucideVoicemail, ShipWheelIcon, VoicemailIcon } from 'lucide-react';
 import { useThemeStore } from '../store/useThemeStore';
 import useLogin from '../hooks/useLogin';
 import useSignUp from '../hooks/useSignUp';
@@ -17,8 +17,18 @@ const AuthPage = () => {
   });
 
   // Hooks
-  const { isPending: loginPending, error: loginError, loginMutation } = useLogin();
-  const { isPending: signupPending, error: signupError, signupMutation } = useSignUp();
+  const {
+    loginMutation,
+    isPending: loginPending,
+    error: loginError
+  } = useLogin();
+
+  // Signup
+  const {
+    signupMutation,
+    isPending: signupPending,
+    error: signupError
+  } = useSignUp();
 
   // Handlers
   const handleChange = (e) => {
@@ -49,7 +59,7 @@ const AuthPage = () => {
         <div className="w-full lg:w-1/2 p-8 flex flex-col justify-center">
           {/* Logo */}
           <div className="mb-8 flex items-center gap-3">
-            <ShipWheelIcon className="size-10 text-primary drop-shadow" />
+            <LucideVoicemail className="size-10 text-primary drop-shadow" />
             <span className="text-4xl font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-widest">
               Vibly
             </span>

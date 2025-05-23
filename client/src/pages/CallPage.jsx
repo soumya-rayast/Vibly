@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import useAuthUser from '../hooks/useAuthUser';
 import { useQuery } from '@tanstack/react-query';
 import { getStreamToken } from '../lib/api';
 import {
-  StreamVideo, StreamVideoClient, StreamCall, CallControls, SpeakerLayout, StreamTheme, CallingState, useCallStateHooks
-} from '@stream-io/video-react-sdk'
-import "@stream-io/video-react-sdk/dist/css/styles.css";
+  StreamVideo, StreamVideoClient, StreamCall,
+  CallControls, SpeakerLayout, StreamTheme,
+  CallingState, useCallStateHooks
+} from '@stream-io/video-react-sdk';
+import '@stream-io/video-react-sdk/dist/css/styles.css';
 import toast from 'react-hot-toast';
 import PageLoader from '../Components/PageLoader';
 
@@ -19,45 +21,42 @@ const CallPage = () => {
   const [isConnecting, setIsConnecting] = useState(true);
 
   const { authUser, isLoading } = useAuthUser();
-  const { token: tokenData } = useQuery({
+  const { data: tokenData, isLoading: isTokenLoading } = useQuery({
     queryKey: ['streamToken'],
     queryFn: getStreamToken,
     enabled: !!authUser,
-  })
+  });
 
   useEffect(() => {
     const initCall = async () => {
-      if (!tokenData.token || !authUser || !callId) return;
+      if (!tokenData?.token || !authUser || !callId) return;
       try {
-        console.log('Initializing stream video client');
         const user = {
           id: authUser._id,
           name: authUser.fullName,
           image: authUser.profilePic,
-        }
+        };
         const videoClient = new StreamVideoClient({
           apiKey: STREAM_API_KEY,
           user,
-          token: tokenData.token
-        })
+          token: tokenData.token,
+        });
         const callInstance = videoClient.call('default', callId);
         await callInstance.join({ create: true });
 
-        console.log('Joined Call Successfully');
         setClient(videoClient);
         setCall(callInstance);
-
       } catch (error) {
-        console.log('Error joining call:', error);
+        console.error('Error joining call:', error);
         toast.error("Could not join the call. Please try again");
       } finally {
         setIsConnecting(false);
       }
-    }
+    };
     initCall();
   }, [tokenData, authUser, callId]);
 
-  if (isLoading || isConnecting) return <PageLoader />
+  if (isLoading || isTokenLoading || isConnecting) return <PageLoader />;
 
   return (
     <div className="h-screen flex flex-col items-center justify-center">
@@ -75,16 +74,18 @@ const CallPage = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const CallContent = () => {
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
-
   const navigate = useNavigate();
 
-  if (callingState === CallingState.LEFT) return navigate("/");
+  if (callingState === CallingState.LEFT) {
+    navigate('/');
+    return null;
+  }
 
   return (
     <StreamTheme>
@@ -94,4 +95,4 @@ const CallContent = () => {
   );
 };
 
-export default CallPage
+export default CallPage;

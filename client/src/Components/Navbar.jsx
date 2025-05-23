@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BellIcon, LogOutIcon, ShipWheelIcon } from "lucide-react";
+import { BellIcon, LogOutIcon, ShipWheelIcon, VoicemailIcon } from "lucide-react";
 import useAuthUser from "../hooks/useAuthUser";
 import useLogout from "../hooks/useLogout";
 import ThemeSelector from "./ThemeSelector";
@@ -19,7 +19,7 @@ const Navbar = () => {
           {isChatPage && (
             <div className="pl-5">
               <Link to="/" className="flex items-center gap-2.5">
-                <ShipWheelIcon className="size-9 text-primary" />
+                <VoicemailIcon className="size-9 text-primary" />
                 <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
                  Vibly
                 </span>
