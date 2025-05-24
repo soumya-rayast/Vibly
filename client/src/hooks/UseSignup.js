@@ -10,7 +10,7 @@ const useSignUp = () => {
     mutationFn: signup,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['authUser'] });
-      navigate('/'); // ✅ redirect after signup too
+      navigate('/');
     },
   });
 

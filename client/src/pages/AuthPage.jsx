@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, LucideVoicemail} from 'lucide-react';
 import { useThemeStore } from '../store/useThemeStore';
-import useLogin from '../hooks/useLogin';
-import useSignUp from '../hooks/useSignUp';
+import useLogin from '../hooks/useLogin.js';
+import useSignUp from '../hooks/useSignUp.js';
 
 const AuthPage = () => {
   const { theme } = useThemeStore();
-  const [mode, setMode] = useState('login'); // 'login' or 'signup'
+  const [mode, setMode] = useState('login'); 
   const [showPassword, setShowPassword] = useState(false);
 
   // Shared state for login and signup

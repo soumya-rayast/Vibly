@@ -35,11 +35,11 @@ const App = () => {
                 <HomePage />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
             )
           }
         />
-        <Route
+        {/* <Route
           path="/signup"
           element={
             !isAuthenticated ? <SignUpPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
@@ -50,13 +50,13 @@ const App = () => {
           element={
             !isAuthenticated ? <LoginPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
           }
-        />
-        {/* <Route
+        /> */}
+        <Route
           path="/auth"
           element={
             !isAuthenticated ? <AuthPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
           }
-        /> */}
+        />
         <Route
           path="/notifications"
           element={
@@ -65,7 +65,7 @@ const App = () => {
                 <Notification />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
             )
           }
         />
@@ -75,7 +75,7 @@ const App = () => {
             isAuthenticated && isOnboarded ? (
               <CallPage />
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
             )
           }
         />
@@ -88,7 +88,7 @@ const App = () => {
                 <ChatPage />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
             )
           }
         />
@@ -100,7 +100,7 @@ const App = () => {
                 <FriendsPage />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
             )
           }
         />
@@ -112,7 +112,7 @@ const App = () => {
                 <ProfilePage />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
             )
           }
         />
@@ -126,7 +126,7 @@ const App = () => {
                 <Navigate to="/" />
               )
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/auth" />
             )
           }
         />
