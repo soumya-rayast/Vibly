@@ -1,8 +1,6 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 import HomePage from './pages/HomePage'
-import SignUpPage from './pages/SignUpPage'
-import LoginPage from './pages/LoginPage'
 import Notification from './pages/Notification'
 import CallPage from './pages/CallPage'
 import ChatPage from './pages/ChatPage'
