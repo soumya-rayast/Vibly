@@ -13,6 +13,8 @@ import useAuthUser from './hooks/useAuthUser'
 import Layout from './Components/Layout'
 import { useThemeStore } from './store/useThemeStore'
 import AuthPage from './pages/AuthPage'
+import FriendsPage from './pages/FriendsPage'
+import ProfilePage from './pages/ProfilePage'
 
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
@@ -33,11 +35,11 @@ const App = () => {
                 <HomePage />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
           }
         />
-        {/* <Route
+        <Route
           path="/signup"
           element={
             !isAuthenticated ? <SignUpPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
@@ -48,13 +50,13 @@ const App = () => {
           element={
             !isAuthenticated ? <LoginPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
           }
-        /> */}
-        <Route
+        />
+        {/* <Route
           path="/auth"
           element={
             !isAuthenticated ? <AuthPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />
           }
-        />
+        /> */}
         <Route
           path="/notifications"
           element={
@@ -63,7 +65,7 @@ const App = () => {
                 <Notification />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
           }
         />
@@ -73,7 +75,7 @@ const App = () => {
             isAuthenticated && isOnboarded ? (
               <CallPage />
             ) : (
-              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
           }
         />
@@ -86,11 +88,34 @@ const App = () => {
                 <ChatPage />
               </Layout>
             ) : (
-              <Navigate to={!isAuthenticated ? "/auth" : "/onboarding"} />
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
           }
         />
-
+        <Route
+          path="/friends"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <Layout showSidebar={true}>
+                <FriendsPage />
+              </Layout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <Layout showSidebar={true}>
+                <ProfilePage />
+              </Layout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
         <Route
           path="/onboarding"
           element={
@@ -101,7 +126,7 @@ const App = () => {
                 <Navigate to="/" />
               )
             ) : (
-              <Navigate to="/auth" />
+              <Navigate to="/login" />
             )
           }
         />

@@ -27,7 +27,7 @@ const Sidebar = () => {
                     <span>Home</span>
                 </Link>
                 <Link
-                    to={'/'}
+                    to={'/friends'}
                     className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${currentPath === '/friends' ? 'btn-active' : ''}`}
                 >
                     <User2Icon className='size-5 text-base-content opacity-70' />
@@ -50,7 +50,7 @@ const Sidebar = () => {
                         </div>
                     </div>
                     <div className='flex-1'>
-                        <p className='font-semibold text-sm'>{authUser?.fullName}</p>
+                        <Link to="/profile" className='font-semibold text-sm'>{authUser?.fullName}</Link>
                         <p className="text-xs text-success flex items-center gap-1">
                             <span className="size-2 rounded-full bg-success inline-block" />
                             Online

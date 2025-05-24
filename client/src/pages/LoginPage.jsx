@@ -1,22 +1,27 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import useLogin from '../hooks/useLogin';
-import { Eye, EyeClosed, EyeOff, ShipWheelIcon, VoicemailIcon } from 'lucide-react'
+import { Eye, EyeOff, VoicemailIcon } from 'lucide-react'
 import { useThemeStore } from '../store/useThemeStore';
 const LoginPage = () => {
-   const { theme } = useThemeStore();
+  const { error, isPending, loginMutation, data } = useLogin();
+  const { theme } = useThemeStore();
   const [loginData, setLoginData] = useState({
     email: "",
     password: ""
   })
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
-  const { isPending, error, loginMutation } = useLogin();
 
   const handleLogin = (e) => {
     e.preventDefault();
     loginMutation(loginData);
   }
+  useEffect(() => {
+    if (data?.success) {
+      navigate("/"); // or your dashboard route
+    }
+  }, [data, navigate]);
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-base-200 via-base-100 to-base-300 p-6" data-theme={theme}>
       <div className="flex flex-col-reverse md:flex-row shadow-2xl rounded-3xl overflow-hidden w-full max-w-4xl border border-primary/10 bg-base-100/90 backdrop-blur-lg">
